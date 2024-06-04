@@ -6,7 +6,7 @@
 /*   By: pbailly <pbailly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:03:09 by alibaba           #+#    #+#             */
-/*   Updated: 2024/06/04 17:28:58 by pbailly          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:47:17 by pbailly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,13 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*left_src;
 
-	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(buff);
 		free(left_src);
-		buff = NULL;
-		line = NULL;
+		left_src = NULL;
 		return (NULL);
 	}
+	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
 	line = fill(fd, left_src, buff);
@@ -99,7 +97,7 @@ int	main(void)
 
 	fd = open("test.txt", O_RDONLY);
 	i = 1;
-	while (i < BUFFER_SIZE)
+	while (i < 5)
 	{
 		line = get_next_line(fd);
 		printf("ligne: %s\n", line);
