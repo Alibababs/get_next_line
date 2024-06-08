@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbailly <pbailly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:03:09 by alibaba           #+#    #+#             */
-/*   Updated: 2024/06/05 13:54:26 by pbailly          ###   ########.fr       */
+/*   Updated: 2024/06/05 13:59:51 by pbailly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*fill(int fd, char *left_src, char *buff)
 {
@@ -65,51 +65,52 @@ char	*get_next_line(int fd)
 {
 	char		*buff;
 	char		*line;
-	static char	*left_src = NULL;
+	static char	*left_src[4096];
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(left_src);
-		left_src = NULL;
+		free(left_src[fd]);
+		left_src[fd] = NULL;
 		return (NULL);
 	}
 	buff = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	if (!buff)
 		return (NULL);
-	line = fill(fd, left_src, buff);
+	line = fill(fd, left_src[fd], buff);
 	free(buff);
 	buff = NULL;
 	if (!line)
 	{
-		free(left_src);
-		left_src = NULL;
+		free(left_src[fd]);
+		left_src[fd] = NULL;
 		return (NULL);
 	}
-	left_src = set_line(line);
+	left_src[fd] = set_line(line);
 	return (line);
 }
 
 /* #include <fcntl.h>
 #include <stdio.h>
 
-void	read_file(const char *file)
-{
-	int		fd;
-	char	*line;
-
-	fd = open(file, O_RDONLY);
-	while ((line = get_next_line(fd)) != NULL)
-	{
-		printf("ligne: %s\n", line);
-	}
-	free(line);
-	close(fd);
-}
-
 int	main(void)
 {
-	read_file("test.txt");
-	read_file("test2.txt");
-	read_file("test3.txt");
-	read_file("test4.txt");
+	char	*line1;
+	char	*line2;
+	int		fd;
+	int		fd2;
+	int		i;
+
+	line1 = NULL;
+	line2 = NULL;
+	fd = open("test.txt", O_RDONLY);
+	fd2 = open("test2.txt", O_RDONLY);
+	i = 0;
+	while (i++ < 5 &&)
+	{
+		line1 = get_next_line(fd);
+		line2 = get_next_line(fd2);
+		printf("%s:%s\n", line1, line2);
+	}
+	close(fd);
+	close(fd2);
 } */
