@@ -6,7 +6,7 @@
 /*   By: pbailly <pbailly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:03:09 by alibaba           #+#    #+#             */
-/*   Updated: 2024/06/05 13:59:51 by pbailly          ###   ########.fr       */
+/*   Updated: 2024/06/21 12:32:52 by pbailly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,15 @@ static char	*fill(int fd, char *left_src, char *buff)
 	{
 		b_read = read(fd, buff, BUFFER_SIZE);
 		if (b_read == -1)
-		{
-			free(left_src);
-			return (NULL);
-		}
+			return (free(left_src), NULL);
 		else if (b_read == 0)
 			break ;
 		buff[b_read] = '\0';
 		if (!left_src)
 			left_src = ft_strdup("");
 		temp = left_src;
-		left_src = ft_strjoin(temp, buff);
+		if (temp != NULL && buff != NULL)
+			left_src = ft_strjoin(temp, buff);
 		free(temp);
 		temp = NULL;
 		if (ft_strchr(buff, '\n'))
@@ -81,7 +79,6 @@ char	*get_next_line(int fd)
 	buff = NULL;
 	if (!line)
 	{
-		free(left_src[fd]);
 		left_src[fd] = NULL;
 		return (NULL);
 	}
