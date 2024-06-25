@@ -6,7 +6,7 @@
 /*   By: pbailly <pbailly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:03:09 by alibaba           #+#    #+#             */
-/*   Updated: 2024/06/21 12:41:50 by pbailly          ###   ########.fr       */
+/*   Updated: 2024/06/25 10:31:15 by pbailly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ void	read_file(const char *file)
 	while ((line = get_next_line(fd)) != NULL)
 	{
 		printf("ligne: %s\n", line);
+		free(line);
 	}
-	free(line);
 	close(fd);
 }
 

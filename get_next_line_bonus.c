@@ -6,7 +6,7 @@
 /*   By: pbailly <pbailly@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 12:03:09 by alibaba           #+#    #+#             */
-/*   Updated: 2024/06/21 12:32:52 by pbailly          ###   ########.fr       */
+/*   Updated: 2024/06/25 10:31:18 by pbailly          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,13 @@ int	main(void)
 	fd = open("test.txt", O_RDONLY);
 	fd2 = open("test2.txt", O_RDONLY);
 	i = 0;
-	while (i++ < 5 &&)
+	while (i++ < 1)
 	{
 		line1 = get_next_line(fd);
 		line2 = get_next_line(fd2);
 		printf("%s:%s\n", line1, line2);
+		free(line1);
+		free(line2);
 	}
 	close(fd);
 	close(fd2);
